@@ -141,7 +141,9 @@ img { display: block; max-width: 100%; }
 .has-dropdown .dropdown {
   display: none;
   position: absolute;
-  top: calc(100% + 20px); left: 50%;
+  top: 100%;
+  padding-top: 20px;
+  left: 50%;
   transform: translateX(-50%);
   background: var(--white);
   border: 1px solid var(--border);
@@ -229,7 +231,7 @@ img { display: block; max-width: 100%; }
   margin-bottom: 16px;
   opacity: 0;
   transform: translateY(10px);
-  animation: fadeUp .8s .2s forwards;
+  animation: fadeUp 1.2s .2s forwards;
 }
 
 .hero-title {
@@ -912,7 +914,7 @@ footer {
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity .6s ease, transform .6s ease;
+  transition: opacity .9s ease, transform .9s ease;
 }
 
 .reveal.visible { opacity: 1; transform: none; }
