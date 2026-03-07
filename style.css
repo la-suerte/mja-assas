@@ -749,7 +749,7 @@ img { display: block; max-width: 100%; }
 .admission-intro {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 40px 64px;
+  padding: 20px 40px 64px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
@@ -780,7 +780,7 @@ img { display: block; max-width: 100%; }
 
 .admission-stats-row {
   display: flex;
-  gap: 20px;
+  gap: 40px;
   margin-top: 32px;
 }
 

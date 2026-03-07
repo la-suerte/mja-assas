@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Actualités — MJA · Magistère Juriste d'Affaires DJCE</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+
+    /* ══════════════════════════════════════════════════════════
+       ACTUALITÉS — page-specific styles
+    ══════════════════════════════════════════════════════════ */
+
+    /* ── PAGE BANNER ─────────────────────────────────────── */
+    .actu-banner {
+      background: var(--black);
+      padding: 140px 40px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .actu-banner::after {
+      content: 'Actualités';
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--serif);
+      font-size: clamp(5rem, 12vw, 10rem);
+      font-weight: 300;
+      color: rgba(255,255,255,.035);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .actu-banner-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .actu-banner-eyebrow {
+      font-family: var(--sans);
+      font-size: .68rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 14px;
+    }
+
+    .actu-banner h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: -.01em;
+    }
+
+    .actu-banner-rule {
+      width: 48px;
+      height: 2px;
+      background: var(--red);
+      margin-top: 28px;
+    }
+
+    /* ── FILTER TABS ─────────────────────────────────────── */
+    .filter-bar {
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      position: sticky;
+      top: 64px;
+      z-index: 50;
+    }
+
+    .filter-bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      gap: 0;
+    }
+
+    .filter-tab {
+      font-family: var(--sans);
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-weight: 400;
+      color: var(--gray);
+      padding: 18px 24px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color .2s, border-color .2s;
+    }
+
+    .filter-tab:hover { color: var(--black); }
+    .filter-tab.active {
+      color: var(--black);
+      border-bottom-color: var(--red);
+      font-weight: 500;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       SECTION 1 — EDITORIAL NEWS
+    ══════════════════════════════════════════════════════ */
+
+    .editorial-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 72px 40px 64px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-header-left .label {
+      font-family: var(--sans);
+      font-size: .68rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 8px;
+    }
+
+    .section-header-left h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 300;
+      letter-spacing: -.01em;
+      color: var(--black);
+    }
+
+    .see-all {
+      font-family: var(--sans);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 500;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap .2s;
+    }
+
+    .see-all:hover { gap: 10px; }
+
+    /* Featured + grid layout */
+    .editorial-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 2px;
+    }
+
+    /* Featured card (spans left column, two rows) */
+    .news-featured {
+      grid-row: 1 / 3;
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: var(--light);
+      cursor: pointer;
+    }
+
+    .news-featured img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(.55);
+      transition: transform .6s cubic-bezier(.25,.46,.45,.94);
+    }
+
+    .news-featured:hover img { transform: scale(1.04); }
+
+    .news-featured-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.1) 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 36px 32px;
+      color: var(--white);
+    }
+
+    .news-featured-cat {
+      font-family: var(--sans);
+      font-size: .65rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--red);
+      background: rgba(217,8,51,.15);
+      border: 1px solid rgba(217,8,51,.4);
+      display: inline-block;
+      padding: 4px 10px;
+      margin-bottom: 14px;
+      width: fit-content;
+    }
+
+    .news-featured-date {
+      font-family: var(--sans);
+      font-size: .68rem;
+      letter-spacing: .08em;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 10px;
+    }
+
+    .news-featured h3 {
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 2vw, 1.7rem);
+      font-weight: 400;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .news-featured p {
+      font-family: var(--sans);
+      font-size: .82rem;
+      line-height: 1.65;
+      font-weight: 300;
+      color: rgba(255,255,255,.7);
+    }
+
+    /* Secondary cards (right column) */
+    .news-secondary {
+      display: flex;
+      gap: 20px;
+      padding: 28px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: background .2s;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+    }
+
+    .news-secondary::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--red);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform .3s ease;
+    }
+
+    .news-secondary:hover { background: var(--light); }
+    .news-secondary:hover::before { transform: scaleY(1); }
+
+    .news-secondary-img {
+      width: 88px;
+      height: 88px;
+      flex-shrink: 0;
+      object-fit: cover;
+      background: var(--border);
+      filter: grayscale(20%);
+    }
+
+    .news-secondary-body {}
+
+    .news-secondary-cat {
+      font-family: var(--sans);
+      font-size: .62rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .news-secondary h4 {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      color: var(--black);
+    }
+
+    .news-secondary-date {
+      font-family: var(--sans);
+      font-size: .7rem;
+      color: var(--gray);
+      font-weight: 300;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       SECTION 2 — LINKEDIN FEED
+    ══════════════════════════════════════════════════════ */
+
+    .linkedin-section {
+      background: var(--light);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 0 56px;
+    }
+
+    .linkedin-section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .social-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 36px;
+    }
+
+    .social-section-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .social-icon-badge {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .social-icon-badge.li { background: #0a66c2; }
+    .social-icon-badge.ig {
+      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    }
+
+    .social-section-title h2 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--black);
+    }
+
+    .social-section-title span {
+      display: block;
+      font-family: var(--sans);
+      font-size: .68rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      font-weight: 300;
+      margin-top: 2px;
+    }
+
+    /* LinkedIn cards scroll row */
+    .li-feed {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .li-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 0;
+      overflow: hidden;
+      transition: box-shadow .25s ease, transform .25s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .li-card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,.08);
+      transform: translateY(-3px);
+    }
+
+    /* LinkedIn card header — mimics the post header UI */
+    .li-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 16px 0;
+    }
+
+    .li-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .li-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .li-avatar-placeholder {
+      font-family: var(--serif);
+      font-size: .9rem;
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .li-header-text {}
+
+    .li-handle {
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--black);
+      line-height: 1.2;
+    }
+
+    .li-meta {
+      font-family: var(--sans);
+      font-size: .68rem;
+      color: #999;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 1px;
+    }
+
+    .li-globe {
+      width: 10px; height: 10px;
+      opacity: .6;
+    }
+
+    /* Post image */
+    .li-card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      margin-top: 12px;
+      display: block;
+      background: var(--border);
+      filter: grayscale(10%);
+    }
+
+    /* Post text */
+    .li-card-body {
+      padding: 14px 16px;
+      flex: 1;
+    }
+
+    .li-card-text {
+      font-family: var(--sans);
+      font-size: .8rem;
+      line-height: 1.65;
+      font-weight: 300;
+      color: #333;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .li-card-text strong {
+      font-weight: 500;
+      color: var(--black);
+    }
+
+    /* Reactions bar — purely decorative, mimics LinkedIn */
+    .li-card-footer {
+      padding: 10px 16px 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .li-reactions {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      flex: 1;
+    }
+
+    .li-reaction-emoji {
+      font-size: .85rem;
+      line-height: 1;
+    }
+
+    .li-reaction-count {
+      font-family: var(--sans);
+      font-size: .72rem;
+      color: #999;
+      font-weight: 300;
+    }
+
+    .li-cta {
+      font-family: var(--sans);
+      font-size: .65rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #0a66c2;
+      font-weight: 500;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       SECTION 3 — INSTAGRAM MOSAIC
+    ══════════════════════════════════════════════════════ */
+
+    .instagram-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 64px 40px 80px;
+    }
+
+    .ig-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 3px;
+      margin-top: 36px;
+    }
+
+    /* Large feature post — spans 2×2 */
+    .ig-cell {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: var(--light);
+      cursor: pointer;
+    }
+
+    .ig-cell.large {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .ig-cell img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .5s cubic-bezier(.25,.46,.45,.94), filter .35s;
+      filter: grayscale(15%);
+    }
+
+    .ig-cell:hover img {
+      transform: scale(1.06);
+      filter: grayscale(0%);
+    }
+
+    .ig-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(217, 8, 51, .72);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
+
+    .ig-cell:hover .ig-overlay { opacity: 1; }
+
+    .ig-overlay-date {
+      font-family: var(--sans);
+      font-size: .65rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.85);
+      font-weight: 300;
+    }
+
+    .ig-overlay-icon {
+      color: var(--white);
+    }
+
+    /* Placeholder cells (solid color blocks for images not yet added) */
+    .ig-placeholder {
+      background: var(--light);
+      border: 1px dashed var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ig-placeholder-label {
+      font-family: var(--sans);
+      font-size: .65rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--border);
+    }
+
+    /* Follow strip */
+    .ig-follow-strip {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ig-follow-strip p {
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 300;
+      color: var(--gray);
+    }
+
+    .ig-follow-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      color: var(--black);
+      transition: border-color .2s, background .2s, color .2s;
+      text-decoration: none;
+    }
+
+    .ig-follow-btn:hover {
+      border-color: var(--black);
+      background: var(--black);
+      color: var(--white);
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────────── */
+    .section-divider {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 1000px) {
+      .li-feed { grid-template-columns: 1fr 1fr; }
+      .ig-grid { grid-template-columns: repeat(4, 1fr); }
+      .ig-cell.large { grid-column: span 2; grid-row: span 2; }
+    }
+
+    @media (max-width: 700px) {
+      .editorial-layout { grid-template-columns: 1fr; }
+      .news-featured { grid-row: auto; aspect-ratio: 4/3; }
+      .li-feed { grid-template-columns: 1fr; }
+      .ig-grid { grid-template-columns: repeat(3, 1fr); }
+      .ig-cell.large { grid-column: span 1; grid-row: span 1; }
+      .filter-bar-inner { padding: 0 16px; overflow-x: auto; }
+      .actu-banner { padding: 120px 24px 56px; }
+      .editorial-section, .linkedin-section-inner,
+      .instagram-section { padding-left: 24px; padding-right: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAVIGATION ═══════════════════════════════════════════════ -->
+<header class="site-header" id="header">
+  <nav class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="mja_images/logo.png" alt="MJA" />
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li class="has-dropdown">
+        <a href="presentation.html">Le Magistère</a>
+        <ul class="dropdown">
+          <li><a href="presentation.html">Présentation</a></li>
+          <li><a href="admission.html">Admission</a></li>
+          <li><a href="#">Enseignements</a></li>
+          <li><a href="#">Mémoires</a></li>
+          <li><a href="#">Débouchés</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="#">Promotions</a>
+        <ul class="dropdown">
+          <li><a href="#">Promotion 2026</a></li>
+          <li><a href="promotion-2027.html">Promotion 2027</a></li>
+          <li><a href="#">Promotion 2028</a></li>
+          <li><a href="#">Anciennes promotions</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="#">L'Association</a>
+        <ul class="dropdown">
+          <li><a href="#">Présentation</a></li>
+          <li><a href="#">Bureau 2026</a></li>
+          <li><a href="#">Anciens bureaux</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Partenaires</a></li>
+      <li><a href="actualites.html" class="active">Actualités</a></li>
+      <li><a href="#">Espace Pro</a></li>
+    </ul>
+
+    <a href="admission.html" class="nav-cta">Candidater</a>
+
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+
+<!-- ══ BANNER ════════════════════════════════════════════════════ -->
+<div class="actu-banner">
+  <div class="actu-banner-inner">
+    <p class="actu-banner-eyebrow">Magistère Juriste d'Affaires · DJCE</p>
+    <h1>Actualités</h1>
+    <div class="actu-banner-rule"></div>
+  </div>
+</div>
+
+
+<!-- ══ FILTER BAR ════════════════════════════════════════════════ -->
+<div class="filter-bar">
+  <div class="filter-bar-inner">
+    <button class="filter-tab active">Tout</button>
+    <button class="filter-tab">Événements</button>
+    <button class="filter-tab">Cabinets</button>
+    <button class="filter-tab">Publications</button>
+    <button class="filter-tab">Alumni</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION 1 — ACTUALITÉS ÉDITORIALES
+══════════════════════════════════════════════════════════════ -->
+<section class="editorial-section">
+  <div class="section-header">
+    <div class="section-header-left">
+      <p class="label">À la une</p>
+      <h2>Vie du Magistère</h2>
+    </div>
+    <a href="#" class="see-all">
+      Toutes les actualités
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <div class="editorial-layout reveal">
+
+    <!-- FEATURED -->
+    <a href="#" class="news-featured">
+      <!-- swap src with your event photo, e.g. ceremonie.jpg -->
+      <img src="mja_images/img-ceremonie.jpg" alt="Cérémonie de remise des diplômes 2025" />
+      <div class="news-featured-overlay">
+        <span class="news-featured-cat">Événement</span>
+        <p class="news-featured-date">Décembre 2025</p>
+        <h3>Cérémonie de remise des diplômes — Promotion 2025</h3>
+        <p>La Maison de l'Amérique latine a accueilli la cérémonie de remise des diplômes, réunissant étudiants, familles et corps enseignant autour d'un moment solennel.</p>
+      </div>
+    </a>
+
+    <!-- SECONDARY 1 -->
+    <a href="#" class="news-secondary reveal delay-1">
+      <img class="news-secondary-img" src="img-cleary.jpg" alt="Cleary Gottlieb" />
+      <div class="news-secondary-body">
+        <p class="news-secondary-cat">Cabinet</p>
+        <h4>Rencontre — Cleary Gottlieb Steen &amp; Hamilton</h4>
+        <p class="news-secondary-date">Décembre 2025</p>
+      </div>
+    </a>
+
+    <!-- SECONDARY 2 -->
+    <a href="#" class="news-secondary reveal delay-2">
+      <img class="news-secondary-img" src="img-hcjp.jpg" alt="HCJP" />
+      <div class="news-secondary-body">
+        <p class="news-secondary-cat">Publication</p>
+        <h4>Invitation — Colloque des 10 ans du HCJP</h4>
+        <p class="news-secondary-date">Décembre 2025</p>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION 2 — LINKEDIN FEED
+══════════════════════════════════════════════════════════════ -->
+<div class="linkedin-section">
+  <div class="linkedin-section-inner">
+
+    <div class="social-section-header">
+      <div class="social-section-title">
+        <div class="social-icon-badge li">
+          <!-- LinkedIn "in" logo -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+            <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.37 4.26 5.44v6.3zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.77 13.02H3.56V9h3.55v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0z"/>
+          </svg>
+        </div>
+        <div>
+          <h2>Sur LinkedIn</h2>
+          <span>@MJA · Magistère Juriste d'Affaires</span>
+        </div>
+      </div>
+      <a href="https://www.linkedin.com/edu/school?id=375008" target="_blank" rel="noopener" class="see-all">
+        Voir la page
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="li-feed">
+
+      <!-- POST 1 — Cérémonie -->
+      <a href="https://www.linkedin.com/edu/school?id=375008" target="_blank" rel="noopener" class="li-card reveal">
+        <div class="li-card-header">
+          <div class="li-avatar">
+            <span class="li-avatar-placeholder">M</span>
+          </div>
+          <div class="li-header-text">
+            <div class="li-handle">MJA – Magistère Juriste d'Affaires</div>
+            <div class="li-meta">
+              <svg class="li-globe" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+              Il y a 3 jours · <strong style="font-size:.68rem;color:#555">Université</strong>
+            </div>
+          </div>
+        </div>
+        <!-- swap src: screenshot or photo from the event -->
+        <img class="li-card-img" src="img-li-ceremonie.jpg" alt="Cérémonie des diplômes 2025" />
+        <div class="li-card-body">
+          <p class="li-card-text">
+            🎓 <strong>Cérémonie de remise des diplômes – Promotion 2025.</strong><br/>
+            Vendredi soir, la Maison de l'Amérique latine accueillait la promotion 2025 pour la remise solennelle de leurs diplômes. Une soirée marquante pour 25 nouveaux juristes d'affaires. Félicitations à tous !
+          </p>
+        </div>
+        <div class="li-card-footer">
+          <div class="li-reactions">
+            <span class="li-reaction-emoji">👏</span>
+            <span class="li-reaction-emoji">❤️</span>
+            <span class="li-reaction-count">184</span>
+          </div>
+          <span class="li-cta">Voir le post →</span>
+        </div>
+      </a>
+
+      <!-- POST 2 — Cleary -->
+      <a href="https://www.linkedin.com/edu/school?id=375008" target="_blank" rel="noopener" class="li-card reveal delay-1">
+        <div class="li-card-header">
+          <div class="li-avatar">
+            <span class="li-avatar-placeholder">M</span>
+          </div>
+          <div class="li-header-text">
+            <div class="li-handle">MJA – Magistère Juriste d'Affaires</div>
+            <div class="li-meta">
+              <svg class="li-globe" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+              Il y a 1 semaine · <strong style="font-size:.68rem;color:#555">Université</strong>
+            </div>
+          </div>
+        </div>
+        <img class="li-card-img" src="img-li-cleary.jpg" alt="Cleary Gottlieb" />
+        <div class="li-card-body">
+          <p class="li-card-text">
+            ⚖️ <strong>Journée d'immersion chez Cleary Gottlieb.</strong><br/>
+            Les étudiants de M1 et M2 ont eu le privilège d'être accueillis par le cabinet Cleary Gottlieb pour une matinée d'immersion, suivie d'échanges avec des associates et des partners alumni du Magistère.
+          </p>
+        </div>
+        <div class="li-card-footer">
+          <div class="li-reactions">
+            <span class="li-reaction-emoji">👏</span>
+            <span class="li-reaction-emoji">💼</span>
+            <span class="li-reaction-count">97</span>
+          </div>
+          <span class="li-cta">Voir le post →</span>
+        </div>
+      </a>
+
+      <!-- POST 3 — HCJP Colloque -->
+      <a href="https://www.linkedin.com/edu/school?id=375008" target="_blank" rel="noopener" class="li-card reveal delay-2">
+        <div class="li-card-header">
+          <div class="li-avatar">
+            <span class="li-avatar-placeholder">M</span>
+          </div>
+          <div class="li-header-text">
+            <div class="li-handle">MJA – Magistère Juriste d'Affaires</div>
+            <div class="li-meta">
+              <svg class="li-globe" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+              Il y a 2 semaines · <strong style="font-size:.68rem;color:#555">Université</strong>
+            </div>
+          </div>
+        </div>
+        <img class="li-card-img" src="img-li-hcjp.jpg" alt="Colloque HCJP" />
+        <div class="li-card-body">
+          <p class="li-card-text">
+            📚 <strong>Colloque des 10 ans du HCJP.</strong><br/>
+            Des étudiants du Magistère ont assisté au colloque anniversaire du Haut Comité Juridique de la Place Financière de Paris. Une opportunité rare d'échanger avec les plus grands noms du droit financier français.
+          </p>
+        </div>
+        <div class="li-card-footer">
+          <div class="li-reactions">
+            <span class="li-reaction-emoji">💡</span>
+            <span class="li-reaction-emoji">👏</span>
+            <span class="li-reaction-count">63</span>
+          </div>
+          <span class="li-cta">Voir le post →</span>
+        </div>
+      </a>
+
+    </div><!-- /li-feed -->
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION 3 — INSTAGRAM MOSAIC
+══════════════════════════════════════════════════════════════ -->
+<section class="instagram-section">
+  <div class="social-section-header">
+    <div class="social-section-title">
+      <div class="social-icon-badge ig">
+        <!-- Instagram logo mark -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      </div>
+      <div>
+        <h2>Sur Instagram</h2>
+        <span>@mja.assas · La vie du Magistère</span>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    MOSAIC — 6 columns × 2 rows = 8 cells
+    Cell 1 is "large" (2×2). The rest are 1×1.
+    Replace src attributes with your actual event photos.
+    Naming suggestion: ig-1.jpg … ig-7.jpg
+    data-date = caption shown on hover overlay
+  -->
+  <div class="ig-grid reveal">
+
+    <!-- Large feature cell -->
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener"
+       class="ig-cell large" data-date="Déc. 2025">
+      <img src="mja_images/ig-1.jpg" alt="Cérémonie 2025" loading="lazy" />
+      <div class="ig-overlay">
+        <svg class="ig-overlay-icon" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        <span class="ig-overlay-date">Déc. 2025</span>
+      </div>
+    </a>
+
+    <!-- Small cells 2–7 (1×1 each) -->
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="ig-cell" data-date="Nov. 2025">
+      <img src="mja_images/ig-2.jpg" alt="Soirée de rentrée" loading="lazy" />
+      <div class="ig-overlay"><span class="ig-overlay-date">Nov. 2025</span></div>
+    </a>
+
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="ig-cell" data-date="Nov. 2025">
+      <img src="mja_images/ig-3.jpg" alt="Tournoi de sports" loading="lazy" />
+      <div class="ig-overlay"><span class="ig-overlay-date">Nov. 2025</span></div>
+    </a>
+
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="ig-cell" data-date="Oct. 2025">
+      <img src="mja_images/ig-4.jpg" alt="Visite cabinet" loading="lazy" />
+      <div class="ig-overlay"><span class="ig-overlay-date">Oct. 2025</span></div>
+    </a>
+
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="ig-cell" data-date="Oct. 2025">
+      <img src="mja_images/ig-5.jpg" alt="Conférence" loading="lazy" />
+      <div class="ig-overlay"><span class="ig-overlay-date">Oct. 2025</span></div>
+    </a>
+
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="ig-cell" data-date="Sept. 2025">
+      <img src="mja_images/ig-6.jpg" alt="Rentrée solennelle" loading="lazy" />
+      <div class="ig-overlay"><span class="ig-overlay-date">Sept. 2025</span></div>
+    </a>
+
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="ig-cell" data-date="Sept. 2025">
+      <img src="mja_images/ig-7.jpg" alt="Portrait promotion" loading="lazy" />
+      <div class="ig-overlay"><span class="ig-overlay-date">Sept. 2025</span></div>
+    </a>
+
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="ig-cell" data-date="Juin 2025">
+      <img src="mja_images/ig-8.jpg" alt="Gala de fin d'année" loading="lazy" />
+      <div class="ig-overlay"><span class="ig-overlay-date">Juin 2025</span></div>
+    </a>
+
+  </div>
+
+  <div class="ig-follow-strip">
+    <p>Retrouvez la vie du Magistère au quotidien sur Instagram.</p>
+    <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="ig-follow-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      Suivre @mja.assas
+    </a>
+  </div>
+</section>
+
+
+<!-- ══ CONTACT ═══════════════════════════════════════════════════ -->
+<div class="contact-bar">
+  <div class="contact-bar-inner">
+    <div>
+      <h3>Magistère Juriste d'Affaires — DJCE</h3>
+      <p>Université Paris-Panthéon-Assas<br/>Pour toute question relative à votre candidature ou à la formation.</p>
+    </div>
+    <div>
+      <p class="contact-bar-label">Secrétariat</p>
+      <div class="contact-detail">
+        <a href="mailto:goraya.mihoubi@assas-universite.fr">goraya.mihoubi@assas-universite.fr</a><br/>
+        01 44 41 58 41<br/>
+        87, rue Notre-Dame-des-Champs<br/>75006 Paris
+      </div>
+    </div>
+    <div>
+      <p class="contact-bar-label">Candidature</p>
+      <a href="admission.html" class="btn-primary" style="display:inline-block;margin-top:4px">Candidater au Magistère</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ FOOTER ════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <p class="footer-copy">© 2025 Magistère Juriste d'Affaires – DJCE · Université Paris II Panthéon-Assas</p>
+    <div class="footer-links">
+      <a href="#">Mentions légales</a>
+      <a href="#">Contact</a>
+      <a href="https://www.facebook.com/mja.assas/" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.linkedin.com/edu/school?id=375008" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+  /* ── Header scroll ── */
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  /* ── Mobile menu ── */
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  /* ── Scroll-reveal ── */
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  /* ── Filter tabs (visual only — wire to real filter logic later) ── */
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
